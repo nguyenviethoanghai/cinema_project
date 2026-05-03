@@ -1,0 +1,32 @@
+File Name/Class Name,Test Case ID,Test Objective,Input,Expected Output,Status,Notes
+api-gateway/auth.go,TC-GATEWAY-01,Role-based access control (RBAC) - Block normal employees from accessing revenue reports,Role: admin / manager_staff / user,HTTP 200 for admin/manager_staff. HTTP 403 for user.,PASS,Check API Gateway auth.go.
+analytics-service.ts,TC-ANALYTICS-01,Calculate and group revenue by movie correctly,"Mock grpc responses: [{movie_id: m-1, revenue: 500}, {movie_id: m-1, revenue: 200}]",Returns grouped data with total_revenue = 700 for m-1,PASS,Database mocked using Jest.
+analytics-service.ts,TC-ANALYTICS-02,Return cached data if available,Filters with cache hit,Returns cached JSON. Grpc clients NOT called.,PASS,Redis mock used.
+analytics-service.ts,TC-ANALYTICS-03,Calculate occupancy rate and map showtime data,"100 seats, 50 tickets sold",occupancy_rate = 50%,PASS,Verified math calculation.
+analytics-service.ts,TC-ANALYTICS-04,Fetch revenue by time from booking service,start_date: 2023-10-01 end_date: 2023-10-31,Returns revenue data array by time,PASS,Mocked bookingGrpcClient.
+analytics-service.ts,TC-ANALYTICS-05,Group revenue by genre,Mock records with multiple movies,Returns revenue grouped by movie genre,PASS,Mocked movieGrpcClient.
+analytics-service.ts,TC-ANALYTICS-06,Get total revenue summary,start_date: 2023-01-01,Returns total numeric revenue value,PASS,
+analytics-service.ts,TC-ANALYTICS-PERF-01,Handle 10000 mock records efficiently (Performance),Loop 10000 iterations generating mock showtime records,Execution time < 1000ms. DB mocked.,PASS,Execution took ~4.35ms in Jest.
+userService.ts,TC-USER-01,Return list of staffs and exclude customers,page=1 size=10 role filter set,Returns only staff users.,PASS,Pagination tested.
+userService.ts,TC-USER-02,Update user if requested by admin,"requestingUserRole: 'admin', updateData: {name: 'New'}",User profile updated to 'New',PASS,Admin override tested.
+userService.ts,TC-USER-03,Block update if requested by another normal user,"requestingUserId: 'different', targetUserId: 'user123'",Throws Error 'You can only update your own profile',PASS,RBAC on user profiles tested.
+userService.ts,TC-USER-04,Block admin from deleting themselves,"requestingUserId: 'admin1', targetUserId: 'admin1'",Throws Error 'You cannot delete your own account',PASS,Self-deletion protection.
+userService.ts,TC-USER-05,Block deleting admin accounts,target user role_id = 'admin',Throws Error 'Cannot delete admin accounts',PASS,
+userService.ts,TC-USER-06,Delete user successfully,target user is normal staff,destroy() method is called (DB Check passed),PASS,Rollback: mocked function state cleared after test.
+userService.ts,TC-USER-07,Return user by ID and exclude password,userId: 'user1',Returns user object without password field,PASS,
+userService.ts,TC-USER-08,Throw error if user not found,userId: 'none',Throws USER_NOT_FOUND error,PASS,
+userService.ts,TC-USER-09,Return paginated users,page=1 size=10,Returns user array and paging metadata,PASS,
+roleService.ts,TC-ROLE-01,Get all roles except customer,Database with admin/staff/customer roles,Returns array containing admin/staff roles only,PASS,
+roleService.ts,TC-ROLE-02,Assign permission successfully,roleId: 'r1' permissionId: 'p1',Permission added to role_permissions table,PASS,
+roleService.ts,TC-ROLE-03,Fail if permission already assigned,roleId: 'r1' permissionId: 'p1' (already exists),Throws error 'Permission already assigned',PASS,
+roleService.ts,TC-ROLE-04,Unassign permission successfully,roleId: 'r1' permissionId: 'p1',Permission removed from role_permissions table,PASS,
+roleService.ts,TC-ROLE-05,Fail if permission not found for role,roleId: 'r1' permissionId: 'p-none',Throws error 'Permission not found for this role',PASS,
+DocumentService.ts,TC-DOC-01,Successfully process document and chunks,"filePath: doc.pdf, title: Test",Extracts text. Creates chunks. status = COMPLETED,PASS,Verifies text extraction and DB insertions.
+DocumentService.ts,TC-DOC-02,Delete document and its chunks,docID: 'test-doc-id',Deletes chunks first. Then deletes document.,PASS,Cache invalidation triggered.
+DocumentService.ts,TC-DOC-03,Fetch single document,docID: 'd1',Returns document metadata,PASS,
+DocumentService.ts,TC-DOC-04,List documents,limit: 10 offset: 0,Returns array of documents,PASS,
+DocumentService.ts,TC-DOC-05,Get chunks for document,docID: 'd1',Returns array of document chunks,PASS,
+news_test.go,TC-NEWS-01,Verify news creation,"title: 'Test Title', content: 'Content'",Repo CreateNewsFunc called with correct arguments.,PASS,Mock test in Go.
+news_test.go,TC-NEWS-02,Verify news deletion,id: 'news-123',Repo DeleteNewsFunc called.,PASS,Mock test in Go.
+news_test.go,TC-NEWS-03,Verify news update,id: 'id-1' title: 'New Title',Repo UpdateNewsSummaryFunc called.,PASS,
+news_test.go,TC-NEWS-04,Verify toggle active status,id: 'id-1' isActive: true,Repo UpdateNewsSummaryIsActiveFunc called.,PASS,
