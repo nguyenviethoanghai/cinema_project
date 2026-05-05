@@ -44,7 +44,7 @@
 
 ## 1.3. Unit Test Cases
 
-### A. Analytics Service
+### A. Báo cáo thống kê (Analytics Service)
 
 **Test File:** `analytics-service/src/services/__tests__/analytics-service.test.ts`
 **Source File:** `analytics-service/src/services/analytics-service.ts`
@@ -61,7 +61,7 @@
 
 ---
 
-### B. User Service – UserService
+### B. Quản lý nhân viên (User Service – UserService)
 
 **Test File:** `user-service/src/services/__tests__/userService.test.ts`
 **Source File:** `user-service/src/services/userService.ts`
@@ -80,7 +80,7 @@
 
 ---
 
-### C. User Service – RoleService
+### C. Quản lý chức vụ và phân quyền (User Service – RoleService)
 
 **Test File:** `user-service/src/services/__tests__/roleService.test.ts`
 **Source File:** `user-service/src/services/roleService.ts`
@@ -95,7 +95,7 @@
 
 ---
 
-### D. Chatbot – DocumentService
+### D. Quản lý hệ thống dữ liệu Chatbot RAG (Chatbot – DocumentService)
 
 **Test File:** `chatbot/src/services/__tests__/DocumentService.test.ts`
 **Source File:** `chatbot/src/services/DocumentService.ts`
@@ -110,7 +110,7 @@
 
 ---
 
-### E. API Gateway & Movie Service (Golang)
+### E. Bảo mật API & Quản lý tin tức (API Gateway & Movie Service)
 
 **Test Files:** `api-gateway/internal/middleware/auth_test.go` | `movie-service/internal/module/news/news_test.go`
 
